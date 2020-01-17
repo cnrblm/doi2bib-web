@@ -1,0 +1,39 @@
+{% extends "main.html"%}
+{% block head%}
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("bibResult");
+        copyText.select(); 
+        document.execCommand("copy");
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copied !";
+    }
+    function outFunc() {
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copy to clipboard";
+    }
+</script>
+{% endblock %}
+{%block main%}
+    <form action="/" method="GET">
+        <div class="input-group">
+            <input type="text" id="myInput" name="url" class="form-control" maxlength="100" placeholder="Enter a doi" value="">
+            <span class="input-group-btn">
+                <input type="submit" class="btn btn-light" value="get BibTeX"  >
+            </span>
+        </div>   
+    </form>
+    
+    {% if result %}
+
+    <textarea id="bibResult" class="md-textarea form-control" >
+        {{result}}
+    </textarea>
+    <div class="tooltipp float-right">
+        <button class="btn btn-dark" onclick="copyToClipboard()" onmouseout="outFunc()" >
+        <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+        Copy text
+        </button>
+    </div>
+    {% endif %}
+{%endblock%}
